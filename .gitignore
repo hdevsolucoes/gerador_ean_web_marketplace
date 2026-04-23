@@ -30,7 +30,7 @@ Thumbs.db
 *.xlsx
 
 # Outros
-preview.png
+# preview.png
 
 # Nginx/Deploy
 *.service
