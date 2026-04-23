@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador EAN-13 | HDevSoluções</title>
+    <style>
+      :root {
+        --primary: #1a73e8;
+        --success: #1e8e3e;
+        --bg: #f8f9fa;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 550px;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        color: var(--primary);
+        text-align: center;
+        margin-top: 0;
+      }
+
+      .config-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .input-field {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+      }
+      input {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      button#btn-gerar {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      button#btn-gerar:hover {
+        opacity: 0.9;
+      }
+
+      /* Area da Tabela com Rolagem */
+      .table-wrapper {
+        margin-top: 25px;
+        max-height: 400px; /* Altura máxima antes de scroll */
+        overflow-y: auto;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        background: #f1f3f4;
+        padding: 12px;
+        font-size: 0.85rem;
+        z-index: 1;
+      }
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+      }
+
+      .codigo-ean {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .btn-copy {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.75rem;
+      }
+
+      .btn-copy:hover {
+        background: #e8eaed;
+      }
+
+      /* Rodapé */
+      footer {
+        text-align: center;
+        color: #777;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .company-name {
+        font-weight: bold;
+        color: #333;
+      }
+      .dica-card {
+        margin-top: 20px;
+        background-color: #fff4e5; /* Amarelo bem claro */
+        border-left: 4px solid #ffa000;
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .dica-icon {
+        font-size: 1.2rem;
+      }
+
+      .dica-texto {
+        font-size: 0.85rem;
+        color: #664d03;
+        line-height: 1.4;
+        margin: 0;
+      }
+
+      .dica-texto strong {
+        color: #443605;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔢 Gerador EAN-13</h1>
+
+      <div class="config-group">
+        <div class="input-field">
+          <label>Prefixo Empresa</label>
+          <input type="text" id="prefixo" maxlength="4" value="9999" />
+        </div>
+        <div class="input-field">
+          <label>Quantidade</label>
+          <input type="number" id="qtd" value="10" min="1" max="100" />
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 10px">
+        <button id="btn-gerar" onclick="gerar()" style="flex: 2">
+          Gerar Códigos
+        </button>
+        <button
+          id="btn-exportar"
+          onclick="exportarCSV()"
+          style="
+            flex: 1;
+            background-color: #34495e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+          "
+        >
+          Exportar CSV
+        </button>
+      </div>
+      <div class="dica-card" id="card-dica" style="display: none">
+        <div class="dica-icon">💡</div>
+        <div class="dica-texto">
+          <strong>Dica para o Marketplace:</strong> Muitos marketplaces (como
+          Mercado Livre e Amazon) exigem apenas o número puro. Como o arquivo
+          CSV separa os dados por vírgula, você pode abrir no Excel ou Google
+          Sheets e copiar apenas a primeira coluna, mantendo as outras como o
+          histórico de segurança da <strong>HDevSoluções</strong>.
+        </div>
+      </div>
+
+      <div id="resultado" class="table-wrapper" style="display: none">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Ação</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="lista-corpo"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2026 <span class="company-name">HDevSoluções</span> - Todos os
+        direitos reservados.<br />
+        Transformando ideias em soluções digitais.<br />
+        Contato: contato@hdevsolucoes.tech
+      </p>
+    </footer>
+
+    <script>
+      async function gerar() {
+        const prefixo = document.getElementById("prefixo").value;
+        const qtd = document.getElementById("qtd").value;
+        const wrapper = document.getElementById("resultado");
+        const corpo = document.getElementById("lista-corpo");
+
+        if (!prefixo) {
+          alert("Por favor, digite um prefixo.");
+          return;
+        }
+
+        try {
+          const res = await fetch(
+            `/gerar?prefixo_empresa=${prefixo}&quantidade=${qtd}`,
+          );
+
+          // Trata erro de validação do FastAPI (como campos mal preenchidos)
+          if (res.status === 422) {
+            alert(
+              "⚠️ Prefixo Inválido: Use apenas números (máximo 4 dígitos).",
+            );
+            return;
+          }
+
+          const dados = await res.json();
+
+          if (dados.erro) {
+            alert("❌ Erro no Servidor: " + dados.detalhe);
+            return;
+          }
+
+          corpo.innerHTML = "";
+          dados.forEach((item) => {
+            corpo.innerHTML += `
+                <tr>
+                    <td class="codigo-ean">${item.codigo}</td>
+                    <td><button class="btn-copy" onclick="copiar('${item.codigo}', this)">Copiar</button></td>
+                    <td>${item.valido_local ? "✅" : "❌"}</td>
+                </tr>
+            `;
+          });
+          document.getElementById("btn-exportar").style.display = "block";
+
+          document.getElementById("card-dica").style.display = "flex";
+
+          wrapper.style.display = "block";
+        } catch (err) {
+          alert("🚀 Não foi possível conectar à API. Verifique sua conexão.");
+        }
+      }
+
+      function copiar(texto, btn) {
+        navigator.clipboard.writeText(texto).then(() => {
+          const originalText = btn.innerText;
+          btn.innerText = "Copiado!";
+          btn.style.color = "green";
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.color = "";
+          }, 1500);
+        });
+      }
+
+      function exportarCSV() {
+        const linhas = document.querySelectorAll("#lista-corpo tr");
+        if (linhas.length === 0) return;
+
+        // Cabeçalho do CSV
+        let csvContent =
+          "data:text/csv;charset=utf-8,Codigo EAN,Status,Data de Geracao\n";
+
+        // Captura a data e hora atual formatada (PT-BR)
+        const agora = new Date().toLocaleString("pt-BR");
+
+        linhas.forEach((linha) => {
+          const colunas = linha.querySelectorAll("td");
+          const codigo = colunas[0].innerText;
+          const status = colunas[2].innerText === "✅" ? "Valido" : "Invalido";
+
+          // Adiciona a linha com a data/hora
+          csvContent += `${codigo},${status},${agora}\n`;
+        });
+
+        // Criação do link de download
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `eans_hdev_${new Date().getTime()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>

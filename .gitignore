@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Ambiente virtual
+.venv/
+venv/
+ENV/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.log
+*.tmp
+*.bak
+
+# Arquivos de exportação
+*.csv
+*.xlsx
+
+# Outros
+preview.png
+
+# Nginx/Deploy
+*.service
+*.conf
+
+# Testes
+htmlcov/
+.coverage
+
+# Ignore arquivos de ambiente
+.env
+.env.*
