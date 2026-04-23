@@ -2,9 +2,9 @@
 
 ![Preview](./preview.png)
 
-![FastAPI](https://shields.io)
-![Python](https://shields.io)
-![JavaScript](https://shields.io)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688?logo=fastapi&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
 
 Uma solução web completa e leve para geração de códigos EAN-13 válidos, ideal para vendedores de marketplaces (Mercado Livre, Amazon, Shopee) que precisam gerenciar seus próprios códigos de barras de forma organizada.
 
