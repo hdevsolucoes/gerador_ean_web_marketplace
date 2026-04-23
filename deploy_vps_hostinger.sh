@@ -4,9 +4,9 @@
 # Autor: HDevSoluções
 
 # Variáveis
-PROJ_DIR="/caminho/para/seu/projeto"  # Altere para o caminho real
+PROJ_DIR="/home/harlem/ean-validos-web"  # Altere para o caminho real
 DOMAIN="hdevsolucoes.tech"
-SUBPATH="/gerador-ean-validos"
+SUBPATH="/gerador-ean-web-marketplace/"
 USER="www-data"
 
 # 1. Instalar dependências
@@ -15,7 +15,7 @@ cd "$PROJ_DIR"
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-gpip install gunicorn uvicorn
+pip install gunicorn uvicorn
 
 # 2. Criar serviço systemd
 SERVICE_FILE="/etc/systemd/system/gerador-ean.service"
@@ -52,7 +52,6 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_redirect off;
-        proxy_set_header SCRIPT_NAME $SUBPATH;
     }
     location $SUBPATH/static/ {
         alias $PROJ_DIR/static/;

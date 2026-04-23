@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
     <title>Gerador EAN-13 | HDevSoluções</title>
     <style>
       :root {
@@ -227,7 +227,7 @@
     </div>
     <div style="text-align: center; margin-top: 15px">
       <a
-        href="/static/docs/TERMOS.html"
+        href="static/docs/TERMOS.html"
         target="_blank"
         style="
           font-size: 0.8rem;
@@ -262,7 +262,7 @@
 
         try {
           const res = await fetch(
-            `/gerar?prefixo_empresa=${prefixo}&quantidade=${qtd}`,
+            `gerar?prefixo_empresa=${prefixo}&quantidade=${qtd}`,
           );
 
           // Trata erro de validação do FastAPI (como campos mal preenchidos)

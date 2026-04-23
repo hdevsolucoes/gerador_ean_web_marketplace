@@ -62,4 +62,4 @@ O Nginx está configurado para servir a aplicação e os arquivos estáticos na 
 
 ---
 
-Dúvidas? Entre em contato: [LinkedIn](https://www.linkedin.com/in/harlemdev/) | [Instagram](https://www.instagram.com/harlemdev/) | [WhatsApp](https://wa.me/5511999999999)
+Dúvidas? Entre em contato: [LinkedIn](https://www.linkedin.com/in/harlem-afonso-claumann-silva-bb5160356/) | [Instagram](https://www.instagram.com/hdevsolucoes/) | [WhatsApp](https://wa.me/5511967745351)
