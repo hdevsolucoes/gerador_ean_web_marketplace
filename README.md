@@ -29,8 +29,8 @@ Uma solução web completa e leve para geração de códigos EAN-13 válidos, id
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com
-   cd gerador_ean_para_marketplace
+   git clone https://github.com/hdevsolucoes/gerador_ean_web_marketplace.git
+   cd gerador_ean_web_marketplace
    ```
 
 2. **Crie um ambiente virtual e ative-o:**
@@ -130,10 +130,6 @@ Pronto! Seu app FastAPI estará rodando em produção.
 
 Ao exportar seus códigos, o arquivo CSV incluirá a data e hora da geração. Isso serve como um histórico de segurança da **HDevSoluções**. Para cadastrar nos marketplaces, basta copiar apenas a primeira coluna do arquivo.
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
-
 ---
 
 ---
@@ -168,13 +164,13 @@ Você pode utilizar este projeto de duas formas:
 
   2.  Siga as instruções de configuração e uso acima.
 
-## Licença e direitos
+## 📄 Licença e direitos
 
 Este projeto é distribuído sob a licença MIT. Você pode usar, modificar e distribuir livremente, desde que mantenha os créditos ao autor.
 
 © 2026 HDevSoluções. Todos os direitos reservados.
 
-Para mais detalhes, consulte o arquivo LICENSE.
+Para mais detalhes, consulte o arquivo [LICENSE](LICENSE).
 
 <div align="center">
    <a href="https://hdevsolucoes.tech/" title="Site"><img src="https://img.shields.io/badge/Site-hdevsolucoes.tech-blue?style=flat&logo=google-chrome"/></a>
